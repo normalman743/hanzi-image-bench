@@ -16,8 +16,8 @@
 
   共用：文本编码器 `Qwen3-VL-8B-Instruct-UD-Q4_K_XL.gguf`（5.15 GB，[unsloth/Qwen3-VL-8B-Instruct-GGUF](https://huggingface.co/unsloth/Qwen3-VL-8B-Instruct-GGUF)），VAE `qwen_image_2.1_vae_bf16.safetensors`（0.68 GB，[unsloth/Qwen-Image-2.1-FP8](https://huggingface.co/unsloth/Qwen-Image-2.1-FP8) 的 `vae/`）。
 
-- **字**：分组见字表（`chars/`）。分组维度：
-  - 常用等级：大陆《通用规范汉字表》1 / 2 / 3 级，台湾甲 / 乙 / 丙表，两边都不收的算 4 级；两边级别都记。
+- **字**：350 个，见下面「字表」。分组维度：
+  - 常用等级：简体用大陆《通用规范汉字表》1 / 2 / 3 级，繁体用台湾甲 / 乙 / 丙表，方言字两边都不收的算 4 级。
   - 复杂度：周长复杂度（Pelli et al., 2006；算法同 [imWo](https://github.com/SebastianKorinth/imWo)）。
   - 字体：简体、繁体（只取和简体字形不同的字，简繁配对记组号）、方言字。
 - **生成设置**（官方配置）：2048×2048，40 步，不开 guidance（`--cfg-scale 1.0`），euler。每个字每个精度用同一组种子，同一个字在不同精度下可以逐张对比。
@@ -59,9 +59,30 @@ bash scripts/gen.sh chars/pilot.tsv
 
 耗时（估算）：L4 上 1024×1024、20 步、cfg 6 实测每张 98 秒。按官方 2048 / 40 步算，4090 上每张约 2–3 分钟，4 张卡每小时约 80–120 张。
 
-## 字表格式
+## 字表
 
-TSV，每行一个字，`#` 开头的行跳过。前两列是脚本要用的：`组名<TAB>字`。后面可以加任意列（大陆级别、台湾表、复杂度、简繁组号、方言标签等），脚本不读这些列，分析时再用。
+正式字表在 `data/singlewords/`（CSV，列：`字,复杂度,级别`）：
+
+| 文件 | 字数 | 级别的含义 |
+|---|---|---|
+| `eval_simplified_120.csv` | 1 / 2 / 3 级各 40 | 大陆《通用规范汉字表》1 / 2 / 3 级 |
+| `eval_traditional_120.csv` | 1 / 2 / 3 级各 40 | 台湾甲 / 乙 / 丙表（1 = 甲，2 = 乙，3 = 丙）；只收和简体字形不同的字 |
+| `eval_dialect_110.csv` | 2 级 24、3 级 12、4 级 74 | 2 / 3 = 大陆字表级别；4 = 两边字表都不收 |
+
+同一文件内各级的复杂度中位数基本一致（简体约 550，繁体约 675），等级和复杂度是分开的。
+
+待补的列：简繁配对组号（国 / 國 这种）、方言字所属方言。
+
+`gen.sh` 读 TSV（`组名<TAB>字`，后面的列不读，`#` 开头的行跳过）。先把 CSV 转成 TSV：
+
+```bash
+python3 scripts/csv2tsv.py data/singlewords/*.csv -o chars/all.tsv
+bash scripts/gen.sh chars/all.tsv
+```
+
+- 组名为字体前缀加级别：`simp_L1` … `trad_L3`、`dial_L2` … `dial_L4`。
+- 行的顺序：各组之间轮流排，组内按复杂度分散排。中途停下时，每组完成的字数差不多，而且已完成的字覆盖从简单到复杂的整个范围。
+- 工作量（估算）：350 字 × 3 个精度 = 1050 张，4 张 4090 按官方 2048 设置约 11 小时，加 F16 约 15 小时。
 
 `chars/pilot.tsv` 是在 L4 上做可行性测试用的 19 个字。
 
