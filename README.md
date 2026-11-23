@@ -16,7 +16,7 @@
 
   共用：文本编码器 `Qwen3-VL-8B-Instruct-UD-Q4_K_XL.gguf`（5.15 GB，[unsloth/Qwen3-VL-8B-Instruct-GGUF](https://huggingface.co/unsloth/Qwen3-VL-8B-Instruct-GGUF)），VAE `qwen_image_2.1_vae_bf16.safetensors`（0.68 GB，[unsloth/Qwen-Image-2.1-FP8](https://huggingface.co/unsloth/Qwen-Image-2.1-FP8) 的 `vae/`）。
 
-- **字**：350 个，见下面「字表」。分组维度：
+- **字**：463 个（单字表 350 + 配对表新增 113），见下面「字表」。分组维度：
   - 常用等级：简体用大陆《通用规范汉字表》1 / 2 / 3 级，繁体用台湾甲 / 乙 / 丙表，方言字两边都不收的算 4 级。
   - 复杂度：周长复杂度（Pelli et al., 2006；算法同 [imWo](https://github.com/SebastianKorinth/imWo)）。
   - 字体：简体、繁体（只取和简体字形不同的字，简繁配对记组号）、方言字。
@@ -68,21 +68,25 @@ bash scripts/gen.sh chars/pilot.tsv
 | `eval_simplified_120.csv` | 1 / 2 / 3 级各 40 | 大陆《通用规范汉字表》1 / 2 / 3 级 |
 | `eval_traditional_120.csv` | 1 / 2 / 3 级各 40 | 台湾甲 / 乙 / 丙表（1 = 甲，2 = 乙，3 = 丙）；只收和简体字形不同的字 |
 | `eval_dialect_110.csv` | 2 级 24、3 级 12、4 级 74 | 2 / 3 = 大陆字表级别；4 = 两边字表都不收 |
+| `eval_simplified_traditional_pairs_60.csv` | 60 对，1 / 2 / 3 级各 20 对 | 简繁配对，两边常用程度对齐：1 = 大陆 1 级配台湾甲表，2 = 2 级配乙表，3 = 3 级配丙表 |
 
 同一文件内各级的复杂度中位数基本一致（简体约 550，繁体约 675），等级和复杂度是分开的。
 
-待补的列：简繁配对组号（国 / 國 这种）、方言字所属方言。
+单字表是各自随机抽的，简繁两边天然配上的只有 1 对，所以另抽了配对表，用来比较同一个字的简繁两种写法（McNemar 检验，按写对率差 20% 左右估计需要约 60 对）。配对表的前 5 对（国國、门門、书書、马馬、龙龍）是试点时手选的，其余为随机抽取。
+
+待补的列：方言字所属方言。
 
 `gen.sh` 读 TSV（`组名<TAB>字`，后面的列不读，`#` 开头的行跳过）。先把 CSV 转成 TSV：
 
 ```bash
-python3 scripts/csv2tsv.py data/singlewords/*.csv -o chars/all.tsv
+python3 scripts/csv2tsv.py data/singlewords/*.csv -o chars/all.tsv -p chars/pairs_index.tsv
 bash scripts/gen.sh chars/all.tsv
 ```
 
-- 组名为字体前缀加级别：`simp_L1` … `trad_L3`、`dial_L2` … `dial_L4`。
+- 组名为字体前缀加级别：`simp_L1` … `trad_L3`、`dial_L2` … `dial_L4`；配对表的字为 `pair_L1_simp`、`pair_L1_trad` 等，每对的两个字连着排。
+- 配对表里已经在单字表中的字（7 个）不重复生成。`chars/pairs_index.tsv` 记录每对的组号、级别、两个字和它们各自所在的组，分析时按字找图。
 - 行的顺序：各组之间轮流排，组内按复杂度分散排。中途停下时，每组完成的字数差不多，而且已完成的字覆盖从简单到复杂的整个范围。
-- 工作量（估算）：350 字 × 3 个精度 = 1050 张，4 张 4090 按官方 2048 设置约 11 小时，加 F16 约 15 小时。
+- 合计 463 个字。工作量（估算）：463 × 3 个精度 ≈ 1390 张，4 张 4090 按官方 2048 设置约 14–15 小时，加 F16 约 19 小时。
 
 `chars/pilot.tsv` 是在 L4 上做可行性测试用的 19 个字。
 
