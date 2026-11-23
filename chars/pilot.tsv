@@ -1,0 +1,20 @@
+# 组名<TAB>字。L4 可行性测试用的 19 个字（简体 4 组各 3 个、简繁 2 对、方言 3 个）
+s1_simple	一
+s1_simple	人
+s1_simple	口
+s1_complex	赢
+s1_complex	警
+s1_complex	囊
+s3_simple	彳
+s3_simple	卬
+s3_simple	钆
+s3_complex	觿
+s3_complex	齇
+s3_complex	鬘
+pair_simp	国
+pair_trad	國
+pair_simp	龙
+pair_trad	龍
+dialect	冇
+dialect	嘅
+dialect	嬲
