@@ -1,0 +1,24 @@
+{"tag":"single_object","include":[{"class":"potted plant","count":1}],"prompt":"一张照片，画面中有一盆植物。","id":"GE-ZH-001","source_line":12,"prompt_en":"a photo of a potted plant"}
+{"tag":"single_object","include":[{"class":"laptop","count":1}],"prompt":"一张照片，画面中有一台笔记本电脑。","id":"GE-ZH-002","source_line":30,"prompt_en":"a photo of a laptop"}
+{"tag":"single_object","include":[{"class":"horse","count":1}],"prompt":"一张照片，画面中有一匹马。","id":"GE-ZH-003","source_line":62,"prompt_en":"a photo of a horse"}
+{"tag":"single_object","include":[{"class":"donut","count":1}],"prompt":"一张照片，画面中有一个甜甜圈。","id":"GE-ZH-004","source_line":64,"prompt_en":"a photo of a donut"}
+{"tag":"two_object","include":[{"class":"fork","count":1},{"class":"knife","count":1}],"prompt":"一张照片，画面中有一把叉子和一把刀。","id":"GE-ZH-005","source_line":86,"prompt_en":"a photo of a fork and a knife"}
+{"tag":"two_object","include":[{"class":"bottle","count":1},{"class":"refrigerator","count":1}],"prompt":"一张照片，画面中有一个瓶子和一台冰箱。","id":"GE-ZH-006","source_line":101,"prompt_en":"a photo of a bottle and a refrigerator"}
+{"tag":"two_object","include":[{"class":"horse","count":1},{"class":"train","count":1}],"prompt":"一张照片，画面中有一匹马和一列火车。","id":"GE-ZH-007","source_line":142,"prompt_en":"a photo of a horse and a train"}
+{"tag":"two_object","include":[{"class":"tv","count":1},{"class":"bicycle","count":1}],"prompt":"一张照片，画面中有一台电视机和一辆自行车。","id":"GE-ZH-008","source_line":147,"prompt_en":"a photo of a tv and a bicycle"}
+{"tag":"counting","include":[{"class":"bus","count":3}],"exclude":[{"class":"bus","count":4}],"prompt":"一张照片，画面中有三辆公共汽车。","id":"GE-ZH-009","source_line":201,"prompt_en":"a photo of three buses"}
+{"tag":"counting","include":[{"class":"dog","count":4}],"exclude":[{"class":"dog","count":5}],"prompt":"一张照片，画面中有四只狗。","id":"GE-ZH-010","source_line":205,"prompt_en":"a photo of four dogs"}
+{"tag":"counting","include":[{"class":"apple","count":3}],"exclude":[{"class":"apple","count":4}],"prompt":"一张照片，画面中有三个苹果。","id":"GE-ZH-011","source_line":206,"prompt_en":"a photo of three apples"}
+{"tag":"counting","include":[{"class":"carrot","count":2}],"exclude":[{"class":"carrot","count":3}],"prompt":"一张照片，画面中有两根胡萝卜。","id":"GE-ZH-012","source_line":234,"prompt_en":"a photo of two carrots"}
+{"tag":"colors","include":[{"class":"bicycle","count":1,"color":"red"}],"prompt":"一张照片，画面中有一辆红色的自行车。","id":"GE-ZH-013","source_line":268,"prompt_en":"a photo of a red bicycle"}
+{"tag":"colors","include":[{"class":"toilet","count":1,"color":"blue"}],"prompt":"一张照片，画面中有一个蓝色的马桶。","id":"GE-ZH-014","source_line":277,"prompt_en":"a photo of a blue toilet"}
+{"tag":"colors","include":[{"class":"laptop","count":1,"color":"orange"}],"prompt":"一张照片，画面中有一台橙色的笔记本电脑。","id":"GE-ZH-015","source_line":308,"prompt_en":"a photo of an orange laptop"}
+{"tag":"colors","include":[{"class":"sheep","count":1,"color":"white"}],"prompt":"一张照片，画面中有一只白色的绵羊。","id":"GE-ZH-016","source_line":322,"prompt_en":"a photo of a white sheep"}
+{"tag":"position","include":[{"class":"tv","count":1},{"class":"apple","count":1,"position":["above",0]}],"prompt":"一张照片，画面中一个苹果位于一台电视机上方。","id":"GE-ZH-017","source_line":362,"prompt_en":"a photo of an apple above a tv"}
+{"tag":"position","include":[{"class":"umbrella","count":1},{"class":"baseball glove","count":1,"position":["below",0]}],"prompt":"一张照片，画面中一只棒球手套位于一把伞下方。","id":"GE-ZH-018","source_line":369,"prompt_en":"a photo of a baseball glove below an umbrella"}
+{"tag":"position","include":[{"class":"spoon","count":1},{"class":"tennis racket","count":1,"position":["right of",0]}],"prompt":"一张照片，画面中一把网球拍位于一把勺子右侧。","id":"GE-ZH-019","source_line":382,"prompt_en":"a photo of a tennis racket right of a spoon"}
+{"tag":"position","include":[{"class":"elephant","count":1},{"class":"zebra","count":1,"position":["left of",0]}],"prompt":"一张照片，画面中一匹斑马位于一头大象左侧。","id":"GE-ZH-020","source_line":406,"prompt_en":"a photo of a zebra left of an elephant"}
+{"tag":"color_attr","include":[{"class":"car","count":1,"color":"red"},{"class":"potted plant","count":1,"color":"orange"}],"prompt":"一张照片，画面中有一辆红色的汽车和一盆橙色的植物。","id":"GE-ZH-021","source_line":468,"prompt_en":"a photo of a red car and an orange potted plant"}
+{"tag":"color_attr","include":[{"class":"sports ball","count":1,"color":"yellow"},{"class":"boat","count":1,"color":"green"}],"prompt":"一张照片，画面中有一个黄色的运动用球和一艘绿色的船。","id":"GE-ZH-022","source_line":494,"prompt_en":"a photo of a yellow sports ball and a green boat"}
+{"tag":"color_attr","include":[{"class":"banana","count":1,"color":"white"},{"class":"elephant","count":1,"color":"black"}],"prompt":"一张照片，画面中有一根白色的香蕉和一头黑色的大象。","id":"GE-ZH-023","source_line":544,"prompt_en":"a photo of a white banana and a black elephant"}
+{"tag":"color_attr","include":[{"class":"cup","count":1,"color":"red"},{"class":"handbag","count":1,"color":"pink"}],"prompt":"一张照片，画面中有一个红色的杯子和一个粉色的手提包。","id":"GE-ZH-024","source_line":548,"prompt_en":"a photo of a red cup and a pink handbag"}

@@ -132,6 +132,19 @@ python3 scripts/sheet.py out sheet.png
 
 场景和长文题的新字沿用 R + imWo 的周长复杂度流程。统一用 BabelStone Han 字体、48 点、600 × 600 像素，在 300 dpi 下渲染并按 `P²/A` 计分。补算值为嘥 559.4714327、粄 573.3429777、佈 458.864892、錄 638.8553187、淨 576.439256、閒 581.3959594。
 
+## 图中文字识别试测
+
+- [场景文字识别](data/scene-text-recognition/eval.csv) 有 60 题，从 [ChineseOCRBench](https://huggingface.co/datasets/SWHL/ChineseOCRBench) 选出 30 道场景问答和 30 道局部文字转写。两类各有 15 道 2–5 字题和 15 道 6–12 字题。
+- [手写提取与整页转写](data/handwritten-or-full-page-transcription/eval.csv) 有 60 题，来自 [OCRBench v2](https://huggingface.co/datasets/ling99/OCRBench_v2)。手写按答案去重后保留 18 道，整页从 CDLA 和 M6Doc 各取 21 道。第 6 项以简体为主。
+
+每题附有图片预览链接、来源版本、源行号、原始问题和标准答案。运行识别时把原图和问题交给模型，用答案字段核对输出。`字形线索` 由答案中的字形自动标记，供抽样使用。
+
+## 通用文生图参照
+
+[GenEval 中文试测题](data/geneval/eval.jsonl) 共 24 道。单物体、双物体、计数、颜色、位置和颜色归属各 4 道。计数覆盖 2 至 4 个物体，位置题覆盖左、右、上、下。
+
+每行对应 [GenEval 原版题库](https://github.com/djghosh13/geneval/blob/d927da8e42fde2b1b5cd743da4df5ff83c1654ff/prompts/evaluation_metadata.jsonl) 中的一道题。`prompt` 是中文提示词，`prompt_en` 是对应原文，`source_line` 从 1 开始计数。原版 `tag`、`include` 和出现时的 `exclude` 都保留，可按官方格式把每题记录与生成图片交给 [GenEval 评分脚本](https://github.com/djghosh13/geneval#evaluation)。这是抽取的中文子集，可以报告子集分数。上游署名和许可见 [MIT 许可证](data/geneval/LICENSE)。
+
 ## 参考
 
 - Qwen-Image 技术报告（ChineseWord 三级字测试）：https://arxiv.org/abs/2508.02324
