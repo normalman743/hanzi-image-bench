@@ -43,6 +43,18 @@ bash scripts/setup.sh        # 下载模型 + 编译 stable-diffusion.cpp（固�
 
 **两个生成脚本的共同行为**：自动使用所有显卡，每张卡一个进程，按行分题；每道题依次跑完所有精度和种子再换下一题，中途停下时已出图的题各精度是齐的；已有的图跳过，中断后重跑同一条命令即可；出错不中断，失败的记为 `FAIL`，sd-cli 原始输出存在 `logs/`，跑完打印失败数量和第一个失败。显存不够（OOM）时加 `--vae-tiling`，还不够再加 `--clip-on-cpu`（编码器放到 CPU，会慢一些）。
 
+**结果保存（建议）**：跑完上传到共享的 Google Drive 文件夹（链接单独发），每个任务一个子文件夹，原样上传输出目录（图片、`manifest_g*.tsv`、`logs/`）：
+
+```
+<Drive 文件夹>/
+  1_single_char/        ← out/
+  2_simple_scene/       ← out_simple-scene-text/
+  3_multi_region/       ← out_multi-region-text/
+  4_full_page/          ← out_full-page-text/
+```
+
+每个子文件夹里另放一个 `run_info.txt`，写明显卡型号、本仓库的 commit（`git rev-parse HEAD`）和改过的参数（精度、种子、尺寸等），方便之后对上结果。
+
 **耗时**：L4 上 1024×1024、40 步实测每张约 85–105 秒（Q2_K 比 Q8_0 慢）。按 2048 级别的尺寸，4090 上估计每张 2–3 分钟，4 张卡每小时约 80–120 张。
 
 ## 任务 1：单字
