@@ -3,3 +3,4 @@ models/
 stable-diffusion.cpp/
 *.png
 __pycache__/
+out_*/
